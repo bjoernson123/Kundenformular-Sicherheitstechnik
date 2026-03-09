@@ -234,6 +234,54 @@
     box-shadow: 0 0 0 2px rgba(37,99,235,.12) !important;
   }
 
+
+  /* ── PREISSUMME ── */
+  .price-bar {
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: var(--shadow);
+  }
+  .price-bar-label {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+  }
+  .price-bar-sum {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .price-bar-note {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 1px;
+  }
+  .price-items {
+    font-size: 11px;
+    color: var(--muted);
+    flex: 1;
+    min-width: 0;
+  }
+  .price-items span {
+    display: inline-block;
+    background: var(--accent-l);
+    color: var(--accent);
+    border-radius: 4px;
+    padding: 1px 6px;
+    margin: 2px 2px;
+    font-weight: 500;
+  }
+
   /* ── RAUMZEILEN ── */
   .room-row {
     display: flex; align-items: center; gap: 8px;
@@ -329,6 +377,18 @@
 
 <main>
 
+  <!-- PREISSUMME -->
+  <div class="price-bar" id="priceBar" style="display:none">
+    <div>
+      <div class="price-bar-label">Ausgewählte Produkte</div>
+      <div class="price-items" id="priceItems"></div>
+    </div>
+    <div style="text-align:right;flex-shrink:0">
+      <div class="price-bar-sum" id="priceSum">0 €</div>
+      <div class="price-bar-note">zzgl. MwSt. · Richtpreis</div>
+    </div>
+  </div>
+
 <!-- ═══ 1. KUNDENDATEN ═══ -->
 <div class="section">
   <div class="sec-head">
@@ -384,6 +444,35 @@
       </div>
     </div>
     <hr class="sep">
+    <div class="row">
+      <div class="field">
+        <label>Router / Hersteller</label>
+        <input type="text" id="router_hersteller" placeholder="z.B. Fritz!Box, Telekom, Speedport …">
+      </div>
+      <div class="field">
+        <label>Modell / Version</label>
+        <input type="text" id="router_modell" placeholder="z.B. Fritz!Box 7590, Speedport Pro+">
+      </div>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label>Internetanschluss</label>
+        <select id="router_anschluss">
+          <option value="">– auswählen –</option>
+          <option>DSL / VDSL</option>
+          <option>Glasfaser (FTTH)</option>
+          <option>Kabel (Coax)</option>
+          <option>LTE / 5G</option>
+          <option>Satellit</option>
+          <option>Sonstiges</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Geschwindigkeit</label>
+        <input type="text" id="router_speed" placeholder="z.B. 250 Mbit/s" inputmode="text">
+      </div>
+    </div>
+    <hr class="sep">
     <div class="field">
       <label>Wie auf uns aufmerksam geworden?</label>
       <select id="aufmerksam">
@@ -416,18 +505,18 @@
     </div>
     <div class="p-item" onclick="toggleCb('z_xt1')">
       <input type="checkbox" class="p-cb" id="z_xt1" name="zentrale" value="LUPUS XT1 Plus Starter Pack (Art.12112)">
+            <input type="number" class="p-qty" min="0" max="9" placeholder="Anz." onclick="event.stopPropagation()">
       <div class="p-info"><div class="p-name">XT1 Plus Starter Pack</div><div class="p-art">Art. 12112 · 249 €</div><div class="p-hint">Inkl. Bewegungsmelder + Türkontakt · bis 100 Sensoren</div></div>
-      <input type="number" class="p-qty" min="0" max="9" placeholder="Anz." onclick="event.stopPropagation()">
     </div>
     <div class="p-item" onclick="toggleCb('z_xt2')">
       <input type="checkbox" class="p-cb" id="z_xt2" name="zentrale" value="LUPUS XT2 Plus Zentrale (Art.12045)">
+            <input type="number" class="p-qty" min="0" max="9" placeholder="Anz." onclick="event.stopPropagation()">
       <div class="p-info"><div class="p-name">XT2 Plus Zentrale</div><div class="p-art">Art. 12045 · 699 €</div><div class="p-hint">Bis 240 Sensoren · 2 Areas · 4G · ZigBee</div></div>
-      <input type="number" class="p-qty" min="0" max="9" placeholder="Anz." onclick="event.stopPropagation()">
     </div>
     <div class="p-item" onclick="toggleCb('z_xt4')">
       <input type="checkbox" class="p-cb" id="z_xt4" name="zentrale" value="LUPUS XT4 Zentrale (Art.12200)">
+            <input type="number" class="p-qty" min="0" max="9" placeholder="Anz." onclick="event.stopPropagation()">
       <div class="p-info"><div class="p-name">XT4 Zentrale <span class="p-badge">NEU</span></div><div class="p-art">Art. 12200 · auf Anfrage</div><div class="p-hint">Bis 480 Sensoren · Pro-Sensoren 2km · EN 50131 Grad2 · KfW-förderbar</div></div>
-      <input type="number" class="p-qty" min="0" max="9" placeholder="Anz." onclick="event.stopPropagation()">
     </div>
     <div class="field" style="margin-top:10px;margin-bottom:0">
       <label>Anmerkung Zentrale</label>
@@ -443,33 +532,33 @@
     </div>
     <div class="p-item" onclick="toggleCb('s_pir')">
       <input type="checkbox" class="p-cb" id="s_pir" name="sensor" value="LUPUSEC PIR Bewegungsmelder V2 (Art.12116)">
+            <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
       <div class="p-info"><div class="p-name">PIR Bewegungsmelder V2</div><div class="p-art">Art. 12116 · 119 €</div><div class="p-hint">Innen · 30–100m · Sabotage</div></div>
-      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
     </div>
     <div class="p-item" onclick="toggleCb('s_360')">
       <input type="checkbox" class="p-cb" id="s_360" name="sensor" value="LUPUSEC 360° PIR Bewegungsmelder (Art.12111)">
+            <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
       <div class="p-info"><div class="p-name">360° PIR Bewegungsmelder</div><div class="p-art">Art. 12111 · 99 €</div><div class="p-hint">Deckenmontage · Vollrundumerfassung</div></div>
-      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
     </div>
     <div class="p-item" onclick="toggleCb('s_dual')">
       <input type="checkbox" class="p-cb" id="s_dual" name="sensor" value="LUPUSEC Dual Way Bewegungsmelder (Art.12034)">
+            <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
       <div class="p-info"><div class="p-name">Dual Way Bewegungsmelder</div><div class="p-art">Art. 12034 · 199 €</div><div class="p-hint">PIR + Mikrowelle · weniger Fehlalarme · 12m · 110°</div></div>
-      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
     </div>
     <div class="p-item" onclick="toggleCb('s_linie')">
       <input type="checkbox" class="p-cb" id="s_linie" name="sensor" value="LUPUSEC Linienbewegungsmelder (Art.12110)">
+            <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
       <div class="p-info"><div class="p-name">Linienbewegungsmelder</div><div class="p-art">Art. 12110 · 99 €</div><div class="p-hint">10° Erfassungsbereich · Lichtschrankeneffekt</div></div>
-      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
     </div>
     <div class="p-item" onclick="toggleCb('s_bewpro')">
       <input type="checkbox" class="p-cb" id="s_bewpro" name="sensor" value="LUPUS Bewegungsmelder Pro (Art.12201) – nur XT4">
+            <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
       <div class="p-info"><div class="p-name">Bewegungsmelder Pro <span class="p-badge">XT4</span></div><div class="p-art">Art. 12201 · auf Anfrage</div><div class="p-hint">Nur XT4 · bis 2km Reichweite</div></div>
-      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
     </div>
     <div class="p-item" onclick="toggleCb('s_outdoor')">
       <input type="checkbox" class="p-cb" id="s_outdoor" name="sensor" value="LUPUS Outdoor Bewegungsmelder Pro (Art.12202) – nur XT4">
+            <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
       <div class="p-info"><div class="p-name">Outdoor Bewegungsmelder Pro <span class="p-badge">XT4</span></div><div class="p-art">Art. 12202 · auf Anfrage</div><div class="p-hint">Außen · IP55 · Optex-Technologie · 5° Lichtschranke</div></div>
-      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
     </div>
   </div>
 
@@ -481,28 +570,28 @@
     </div>
     <div class="p-item" onclick="toggleCb('s_fkw')">
       <input type="checkbox" class="p-cb" id="s_fkw" name="sensor" value="LUPUSEC Fenster-/Türkontakt V2 weiß (Art.12113)">
+            <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
       <div class="p-info"><div class="p-name">Fenster-/Türkontakt V2 <span style="opacity:.6;font-size:12px">weiß</span></div><div class="p-art">Art. 12113 · 69 €</div><div class="p-hint">Magnetkontakt · 5 Jahre Batterie · Sabotage</div></div>
-      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
     </div>
     <div class="p-item" onclick="toggleCb('s_fkb')">
       <input type="checkbox" class="p-cb" id="s_fkb" name="sensor" value="LUPUSEC Fenster-/Türkontakt V2 braun (Art.12114)">
+            <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
       <div class="p-info"><div class="p-name">Fenster-/Türkontakt V2 <span style="opacity:.6;font-size:12px">braun</span></div><div class="p-art">Art. 12114 · 69 €</div><div class="p-hint">RAL 8011 braun</div></div>
-      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
     </div>
     <div class="p-item" onclick="toggleCb('s_fka')">
       <input type="checkbox" class="p-cb" id="s_fka" name="sensor" value="LUPUSEC Fenster-/Türkontakt V2 anthrazit (Art.12115)">
+            <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
       <div class="p-info"><div class="p-name">Fenster-/Türkontakt V2 <span style="opacity:.6;font-size:12px">anthrazit</span></div><div class="p-art">Art. 12115 · 69 €</div><div class="p-hint">RAL 7016 anthrazit</div></div>
-      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
     </div>
     <div class="p-item" onclick="toggleCb('s_fkpro')">
       <input type="checkbox" class="p-cb" id="s_fkpro" name="sensor" value="LUPUS Türkontakt Pro weiß (Art.12203) – nur XT4">
+            <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
       <div class="p-info"><div class="p-name">Türkontakt Pro <span class="p-badge">XT4</span></div><div class="p-art">Art. 12203 · auf Anfrage</div><div class="p-hint">Nur XT4 · bis 2km · 5 Jahre Batterie</div></div>
-      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
     </div>
     <div class="p-item" onclick="toggleCb('s_rahmen')">
       <input type="checkbox" class="p-cb" id="s_rahmen" name="sensor" value="LUPUS Rahmenkontakt Pro (Art.12204) – nur XT4">
+            <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
       <div class="p-info"><div class="p-name">Rahmenkontakt Pro <span class="p-badge">XT4</span></div><div class="p-art">Art. 12204 · auf Anfrage</div><div class="p-hint">Innenliegend Rahmen/Flügel · 5,8 Jahre Batterie</div></div>
-      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
     </div>
   </div>
 
@@ -514,23 +603,23 @@
     </div>
     <div class="p-item" onclick="toggleCb('s_gb')">
       <input type="checkbox" class="p-cb" id="s_gb" name="sensor" value="LUPUSEC Glasbruchmelder V2 (Art.12103)">
+            <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
       <div class="p-info"><div class="p-name">Glasbruchmelder V2</div><div class="p-art">Art. 12103 · 139 €</div><div class="p-hint">Akustisch · max. 8m Abstand</div></div>
-      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
     </div>
     <div class="p-item" onclick="toggleCb('s_erschuett')">
       <input type="checkbox" class="p-cb" id="s_erschuett" name="sensor" value="LUPUSEC Erschütterungsmelder (Art.12105)">
+            <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
       <div class="p-info"><div class="p-name">Erschütterungsmelder</div><div class="p-art">Art. 12105 · 89 €</div><div class="p-hint">Klebemont. · erkennt Einbruchversuche · 2,6 J. Batterie</div></div>
-      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
     </div>
     <div class="p-item" onclick="toggleCb('s_rauch')">
       <input type="checkbox" class="p-cb" id="s_rauch" name="sensor" value="LUPUSEC Rauchmelder V2 (Art.12117)">
+            <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
       <div class="p-info"><div class="p-name">Rauchmelder V2</div><div class="p-art">Art. 12117 · 99 €</div><div class="p-hint">EN 14604 · optisch · inkl. Innensirene</div></div>
-      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
     </div>
     <div class="p-item" onclick="toggleCb('s_wasser')">
       <input type="checkbox" class="p-cb" id="s_wasser" name="sensor" value="LUPUSEC Wassermelder V2 (Art.12047)">
+            <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
       <div class="p-info"><div class="p-name">Wassermelder V2</div><div class="p-art">Art. 12047 · 99 €</div><div class="p-hint">Ext. wasserfester Fühler · Schutz vor Wasserschäden</div></div>
-      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
     </div>
   </div>
 
@@ -542,13 +631,13 @@
     </div>
     <div class="p-item" onclick="toggleCb('sir_innen')">
       <input type="checkbox" class="p-cb" id="sir_innen" name="sirene" value="LUPUSEC Innensirene (Art.12005)">
+            <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
       <div class="p-info"><div class="p-name">Innensirene</div><div class="p-art">Art. 12005 · 149 €</div><div class="p-hint">104 dB · drahtlos · 2 Jahre Batterie</div></div>
-      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
     </div>
     <div class="p-item" onclick="toggleCb('sir_aussen')">
       <input type="checkbox" class="p-cb" id="sir_aussen" name="sirene" value="LUPUSEC Außensirene V2 (Art.12033)">
+            <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
       <div class="p-info"><div class="p-name">Außensirene V2</div><div class="p-art">Art. 12033 · 219 €</div><div class="p-hint">107 dB · IP56 · 2-Wege · 3 Jahre Batterie</div></div>
-      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
     </div>
 
     <div class="grp-title" style="margin-top:14px">
@@ -557,33 +646,33 @@
     </div>
     <div class="p-item" onclick="toggleCb('bed_keypad')">
       <input type="checkbox" class="p-cb" id="bed_keypad" name="bedienung" value="LUPUSEC Keypad V2 (Art.12106)">
+            <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
       <div class="p-info"><div class="p-name">Keypad V2 (Innen)</div><div class="p-art">Art. 12106 · 99 €</div><div class="p-hint">Funk · rollierendes Verschlüsselungsverfahren · 2 J. Batterie</div></div>
-      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
     </div>
     <div class="p-item" onclick="toggleCb('bed_kpout')">
       <input type="checkbox" class="p-cb" id="bed_kpout" name="bedienung" value="LUPUSEC Outdoor Keypad V2">
+            <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
       <div class="p-info"><div class="p-name">Outdoor Keypad V2 (Außen)</div><div class="p-art">wetterfest</div><div class="p-hint">Für Außenbereich</div></div>
-      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
     </div>
     <div class="p-item" onclick="toggleCb('bed_fb')">
       <input type="checkbox" class="p-cb" id="bed_fb" name="bedienung" value="LUPUS Fernbedienung V3 (Art.12118)">
+            <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
       <div class="p-info"><div class="p-name">Fernbedienung V3</div><div class="p-art">Art. 12118 · 59 €</div><div class="p-hint">Hosentasche · Scharf/Unscharf · Panikfunktion</div></div>
-      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
     </div>
     <div class="p-item" onclick="toggleCb('bed_tag')">
       <input type="checkbox" class="p-cb" id="bed_tag" name="bedienung" value="LUPUSEC Tag Reader V2">
+            <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
       <div class="p-info"><div class="p-name">Tag Reader V2</div><div class="p-art">RFID</div><div class="p-hint">Schnelles Scharf/Unscharf per RFID-Tag</div></div>
-      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
     </div>
     <div class="p-item" onclick="toggleCb('bed_display')">
       <input type="checkbox" class="p-cb" id="bed_display" name="bedienung" value="LUPUS 10 Zoll PoE Smarthome Display (Art.11120)">
+            <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
       <div class="p-info"><div class="p-name">10″ PoE Smarthome Display</div><div class="p-art">Art. 11120 · 599 €</div><div class="p-hint">Wandmontage bündig · Android 13 · Strom per PoE</div></div>
-      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
     </div>
     <div class="p-item" onclick="toggleCb('s_rep')">
       <input type="checkbox" class="p-cb" id="s_rep" name="sensor" value="LUPUSEC Funkrepeater V2 (Art.12122)">
+            <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
       <div class="p-info"><div class="p-name">Funkrepeater V2</div><div class="p-art">Art. 12122 · 169 €</div><div class="p-hint">Erweitert Reichweite · bis 80 RF-Sensoren</div></div>
-      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
     </div>
   </div>
 
@@ -666,47 +755,47 @@
       <div class="grp-title" style="margin-top:0">PoE Netzwerkkameras (Kabel)</div>
       <div class="p-item" onclick="toggleCb('lc_le228')">
         <input type="checkbox" class="p-cb" id="lc_le228" name="cam_lupus" value="LUPUS LE228 V2 PoE Dome 4MP (Art.LE228)">
-        <div class="p-info"><div class="p-name">LE228 V2 – Mini Dome PoE</div><div class="p-art">4MP · IP67 · IK10</div><div class="p-hint">Innen/Außen · KI Personen- & Fahrzeugerkennung · 50m IR · Mikrofon</div></div>
-        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+                <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      <div class="p-info"><div class="p-name">LE228 V2 – Mini Dome PoE</div><div class="p-art">4MP · IP67 · IK10</div><div class="p-hint">Innen/Außen · KI Personen- & Fahrzeugerkennung · 50m IR · Mikrofon</div></div>
       </div>
       <div class="p-item" onclick="toggleCb('lc_le224')">
         <input type="checkbox" class="p-cb" id="lc_le224" name="cam_lupus" value="LUPUS LE224 PoE Dome 8MP 4K">
-        <div class="p-info"><div class="p-name">LE224 – Dome PoE 4K</div><div class="p-art">8MP · 3840×2160px</div><div class="p-hint">Außen · Autofocus · IR-Nachtsicht · robust IK10</div></div>
-        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+                <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      <div class="p-info"><div class="p-name">LE224 – Dome PoE 4K</div><div class="p-art">8MP · 3840×2160px</div><div class="p-hint">Außen · Autofocus · IR-Nachtsicht · robust IK10</div></div>
       </div>
       <div class="p-item" onclick="toggleCb('lc_le221')">
         <input type="checkbox" class="p-cb" id="lc_le221" name="cam_lupus" value="LUPUS LE221 PoE Kamera 8MP 4K">
-        <div class="p-info"><div class="p-name">LE221 – Bullet PoE 4K</div><div class="p-art">8MP · 3840×2160px</div><div class="p-hint">Außen · IR-Nachtsicht · wetterfest</div></div>
-        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+                <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      <div class="p-info"><div class="p-name">LE221 – Bullet PoE 4K</div><div class="p-art">8MP · 3840×2160px</div><div class="p-hint">Außen · IR-Nachtsicht · wetterfest</div></div>
       </div>
       <div class="p-item" onclick="toggleCb('lc_le213')">
         <input type="checkbox" class="p-cb" id="lc_le213" name="cam_lupus" value="LUPUS LE213 Alarmkamera Außen">
-        <div class="p-info"><div class="p-name">LE213 – Alarmkamera Außen</div><div class="p-art">Aktive Abschreckung</div><div class="p-hint">Automatische Personenerkennung · Täteransprache · Flutlicht · Sirene</div></div>
-        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+                <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      <div class="p-info"><div class="p-name">LE213 – Alarmkamera Außen</div><div class="p-art">Aktive Abschreckung</div><div class="p-hint">Automatische Personenerkennung · Täteransprache · Flutlicht · Sirene</div></div>
       </div>
       <div class="p-item" onclick="toggleCb('lc_le232')">
         <input type="checkbox" class="p-cb" id="lc_le232" name="cam_lupus" value="LUPUS LE232 Alarmkamera">
-        <div class="p-info"><div class="p-name">LE232 – Alarmkamera 4MP</div><div class="p-art">4MP · 2560×1440px</div><div class="p-hint">KI · 3 Eskalationsstufen · aktive Abschreckung · 30m IR</div></div>
-        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+                <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      <div class="p-info"><div class="p-name">LE232 – Alarmkamera 4MP</div><div class="p-art">4MP · 2560×1440px</div><div class="p-hint">KI · 3 Eskalationsstufen · aktive Abschreckung · 30m IR</div></div>
       </div>
 
       <div class="grp-title">WLAN-Kameras (kabellos)</div>
       <div class="p-item" onclick="toggleCb('lc_le202')">
         <input type="checkbox" class="p-cb" id="lc_le202" name="cam_lupus" value="LUPUS LE202 V3 WLAN Bullet 4MP">
-        <div class="p-info"><div class="p-name">LE202 V3 – WLAN Bullet</div><div class="p-art">4MP · WLAN oder LAN</div><div class="p-hint">Innen/Außen · KI Personenerkennung · Mikrofon · 30m IR</div></div>
-        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+                <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      <div class="p-info"><div class="p-name">LE202 V3 – WLAN Bullet</div><div class="p-art">4MP · WLAN oder LAN</div><div class="p-hint">Innen/Außen · KI Personenerkennung · Mikrofon · 30m IR</div></div>
       </div>
       <div class="p-item" onclick="toggleCb('lc_le204')">
         <input type="checkbox" class="p-cb" id="lc_le204" name="cam_lupus" value="LUPUS LE204 WLAN Dome 3MP">
-        <div class="p-info"><div class="p-name">LE204 – WLAN Dome</div><div class="p-art">3MP · WLAN</div><div class="p-hint">Außen · SD-Aufzeichnung · Nachtsicht · Metallgehäuse</div></div>
-        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+                <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      <div class="p-info"><div class="p-name">LE204 – WLAN Dome</div><div class="p-art">3MP · WLAN</div><div class="p-hint">Außen · SD-Aufzeichnung · Nachtsicht · Metallgehäuse</div></div>
       </div>
 
       <div class="grp-title">NVR Rekorder (LUPUS)</div>
       <div class="p-item" onclick="toggleCb('lc_nvr4k')">
         <input type="checkbox" class="p-cb" id="lc_nvr4k" name="cam_lupus" value="LUPUS NVR Rekorder 4K">
-        <div class="p-info"><div class="p-name">NVR Rekorder 4K</div><div class="p-art">HDMI 4K · VGA</div><div class="p-hint">Zentrale Aufzeichnung · bis 4K · HDMI & VGA Ausgang</div></div>
-        <input type="number" class="p-qty" min="0" max="9" placeholder="Anz." onclick="event.stopPropagation()">
+                <input type="number" class="p-qty" min="0" max="9" placeholder="Anz." onclick="event.stopPropagation()">
+      <div class="p-info"><div class="p-name">NVR Rekorder 4K</div><div class="p-art">HDMI 4K · VGA</div><div class="p-hint">Zentrale Aufzeichnung · bis 4K · HDMI & VGA Ausgang</div></div>
       </div>
     </div>
 
@@ -715,47 +804,47 @@
       <div class="grp-title" style="margin-top:0">eufyCam – Akku & Solar (kabellos)</div>
       <div class="p-item" onclick="toggleCb('ec_s330')">
         <input type="checkbox" class="p-cb" id="ec_s330" name="cam_eufy" value="eufy eufyCam S330 (eufyCam 3) 4K">
-        <div class="p-info"><div class="p-name">eufyCam S330 (eufyCam 3)</div><div class="p-art">4K · Solar · kabellos</div><div class="p-hint">4K · BionicMind KI · lokale Speicherung · kein Abo</div></div>
-        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+                <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      <div class="p-info"><div class="p-name">eufyCam S330 (eufyCam 3)</div><div class="p-art">4K · Solar · kabellos</div><div class="p-hint">4K · BionicMind KI · lokale Speicherung · kein Abo</div></div>
       </div>
       <div class="p-item" onclick="toggleCb('ec_s210')">
         <input type="checkbox" class="p-cb" id="ec_s210" name="cam_eufy" value="eufy eufyCam S210 (eufyCam 2C)">
-        <div class="p-info"><div class="p-name">eufyCam S210 (eufyCam 2C)</div><div class="p-art">1080p · Akku 180 Tage</div><div class="p-hint">Kabellos · 180 Tage Laufzeit · Personenerkennung</div></div>
-        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+                <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      <div class="p-info"><div class="p-name">eufyCam S210 (eufyCam 2C)</div><div class="p-art">1080p · Akku 180 Tage</div><div class="p-hint">Kabellos · 180 Tage Laufzeit · Personenerkennung</div></div>
       </div>
       <div class="p-item" onclick="toggleCb('ec_solocam')">
         <input type="checkbox" class="p-cb" id="ec_solocam" name="cam_eufy" value="eufy SoloCam S340 Solar Außen">
-        <div class="p-info"><div class="p-name">SoloCam S340 – Solar Außen</div><div class="p-art">3K · Solar · IP67</div><div class="p-hint">Doppelobjektiv · 360° Wächter · kein WLAN nötig zum Aufladen</div></div>
-        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+                <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      <div class="p-info"><div class="p-name">SoloCam S340 – Solar Außen</div><div class="p-art">3K · Solar · IP67</div><div class="p-hint">Doppelobjektiv · 360° Wächter · kein WLAN nötig zum Aufladen</div></div>
       </div>
 
       <div class="grp-title">eufy Indoor – Innenkameras</div>
       <div class="p-item" onclick="toggleCb('ec_s350')">
         <input type="checkbox" class="p-cb" id="ec_s350" name="cam_eufy" value="eufy Indoor Cam S350 4K">
-        <div class="p-info"><div class="p-name">Indoor Cam S350</div><div class="p-art">4K · 360° · PTZ</div><div class="p-hint">Innen · Nachtsicht 30m · 8-fach Zoom · microSD bis 128GB</div></div>
-        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+                <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      <div class="p-info"><div class="p-name">Indoor Cam S350</div><div class="p-art">4K · 360° · PTZ</div><div class="p-hint">Innen · Nachtsicht 30m · 8-fach Zoom · microSD bis 128GB</div></div>
       </div>
       <div class="p-item" onclick="toggleCb('ec_e220')">
         <input type="checkbox" class="p-cb" id="ec_e220" name="cam_eufy" value="eufy Indoor Cam E220">
-        <div class="p-info"><div class="p-name">Indoor Cam E220</div><div class="p-art">2K · KI · Zwei-Wege Audio</div><div class="p-hint">KI Personen/Tier/Objekt · lokale Speicherung · kein Abo</div></div>
-        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+                <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      <div class="p-info"><div class="p-name">Indoor Cam E220</div><div class="p-art">2K · KI · Zwei-Wege Audio</div><div class="p-hint">KI Personen/Tier/Objekt · lokale Speicherung · kein Abo</div></div>
       </div>
 
       <div class="grp-title">eufy Außen – WLAN & PoE</div>
       <div class="p-item" onclick="toggleCb('ec_outdoor')">
         <input type="checkbox" class="p-cb" id="ec_outdoor" name="cam_eufy" value="eufy Outdoor Cam E220 All-in-One">
-        <div class="p-info"><div class="p-name">Outdoor Cam E220 All-in-One</div><div class="p-art">IP67 · WLAN</div><div class="p-hint">Wetterfest · Nachtsicht · Bewegungserkennung · einfache Montage</div></div>
-        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+                <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      <div class="p-info"><div class="p-name">Outdoor Cam E220 All-in-One</div><div class="p-art">IP67 · WLAN</div><div class="p-hint">Wetterfest · Nachtsicht · Bewegungserkennung · einfache Montage</div></div>
       </div>
       <div class="p-item" onclick="toggleCb('ec_nvrs4')">
         <input type="checkbox" class="p-cb" id="ec_nvrs4" name="cam_eufy" value="eufy PoE NVR Security System S4 Max">
-        <div class="p-info"><div class="p-name">PoE NVR Security System S4 Max</div><div class="p-art">PTZ + Weitwinkel · PoE</div><div class="p-hint">Auto-Tracking bis 50m · KI Fehlalarm-Reduktion · zentrales System</div></div>
-        <input type="number" class="p-qty" min="0" max="9" placeholder="Anz." onclick="event.stopPropagation()">
+                <input type="number" class="p-qty" min="0" max="9" placeholder="Anz." onclick="event.stopPropagation()">
+      <div class="p-info"><div class="p-name">PoE NVR Security System S4 Max</div><div class="p-art">PTZ + Weitwinkel · PoE</div><div class="p-hint">Auto-Tracking bis 50m · KI Fehlalarm-Reduktion · zentrales System</div></div>
       </div>
       <div class="p-item" onclick="toggleCb('ec_flut')">
         <input type="checkbox" class="p-cb" id="ec_flut" name="cam_eufy" value="eufy Flutlicht-Kamera 2K">
-        <div class="p-info"><div class="p-name">Flutlicht-Kamera</div><div class="p-art">2K · 2000 Lumen+</div><div class="p-hint">Aktive Abschreckung · 360° PTZ · bewegungsaktiviertes Licht · IP65</div></div>
-        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+                <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      <div class="p-info"><div class="p-name">Flutlicht-Kamera</div><div class="p-art">2K · 2000 Lumen+</div><div class="p-hint">Aktive Abschreckung · 360° PTZ · bewegungsaktiviertes Licht · IP65</div></div>
       </div>
     </div>
 
@@ -880,6 +969,38 @@
 </main>
 
 <script>
+
+// ── PREISBERECHNUNG
+const PREISE = {
+  z_xt1:249, z_xt2:699,
+  s_pir:119, s_360:99, s_dual:199, s_linie:99,
+  s_gb:139, s_erschuett:89, s_rauch:99, s_wasser:99, s_rep:169,
+  sir_innen:149, sir_aussen:219,
+  bed_keypad:99, bed_fb:59, bed_display:599
+};
+function updatePrices() {
+  let total = 0;
+  const chips = [];
+  document.querySelectorAll('.p-cb:checked').forEach(cb => {
+    const item = cb.closest('.p-item');
+    const qty = Math.max(1, parseInt(item?.querySelector('.p-qty')?.value||'1')||1);
+    const preis = PREISE[cb.id];
+    const name = (item?.querySelector('.p-name')?.childNodes[0]?.textContent||cb.id).trim();
+    const short = name.length>24 ? name.slice(0,22)+'…' : name;
+    if(preis){ total += preis*qty; chips.push(`${qty}× ${short}`); }
+    else { chips.push(`${qty}× ${short} (Anfrage)`); }
+  });
+  const bar=document.getElementById('priceBar');
+  if(!chips.length){ bar.style.display='none'; return; }
+  bar.style.display='flex';
+  document.getElementById('priceTotal').textContent = total>0
+    ? total.toLocaleString('de-DE',{minimumFractionDigits:2})+' €' : '–';
+  document.getElementById('priceChips').innerHTML =
+    chips.map(ch=>`<span class="price-chip">${ch}</span>`).join('');
+}
+document.addEventListener('change', e=>{ if(e.target.matches('.p-cb,.p-qty')) updatePrices(); });
+document.addEventListener('input',  e=>{ if(e.target.matches('.p-qty'))        updatePrices(); });
+
 // ── DATUM
 const today = new Date().toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'});
 document.getElementById('datePill').textContent = today;
@@ -1079,6 +1200,8 @@ async function exportPDF(){
   row('E-Mail',v('email'));
   row('Telefon',v('telefon'));
   row('Aufmerksam',v('aufmerksam'));
+  row('Router',`${v('router_hersteller')} ${v('router_modell')}`.replace('– –','–').trim());
+  row('Internetanschluss',`${v('router_anschluss')} ${v('router_speed')}`.replace('– –','–').trim());
   gap();
 
   // 2. Alarmanlage
@@ -1097,41 +1220,41 @@ async function exportPDF(){
   row('Hinweise',v('alarm_notiz'));
   gap();
 
-  // 3. Videoüberwachung
-  secHdr('3','Videoüberwachung');
-  row('Anzahl Kameras',v('cam_anzahl'));
-  row('Aufzeichnung',v('cam_aufz'));
-  row('Speicher',getTagsSimple('speicher'));
-  const lupusCams=getTags('cam_lupus');
-  const eufyCams=getTags('cam_eufy');
-  if(lupusCams!=='–'){ subHdr('LUPUS Produkte'); row('',lupusCams); }
-  if(eufyCams!=='–'){ subHdr('eufy Produkte'); row('',eufyCams); }
-  const sonstLief=v('cam_sonst_lief');
-  const sonstMod=v('cam_sonst_modell');
-  if(sonstLief!=='–'||sonstMod!=='–'){ subHdr('Sonstiger Lieferant'); row('Lieferant',sonstLief); row('Modell',sonstMod); }
-  const cams=getCameras();
-  if(cams!=='– keine –'){ subHdr('Kamerapositionen'); row('',cams); }
-  row('Hinweise',v('video_notiz'));
-  gap();
+  // 3. Videoüberwachung – nur wenn etwas ausgefüllt
+  const _lupusCams=getTags('cam_lupus');
+  const _eufyCams=getTags('cam_eufy');
+  const _sonstLief=v('cam_sonst_lief');
+  const _sonstMod=v('cam_sonst_modell');
+  const _cams=getCameras();
+  const _camAnz=v('cam_anzahl');
+  const _hasVideo=_lupusCams!=='–'||_eufyCams!=='–'||_sonstLief!=='–'||_cams!=='– keine –'||_camAnz!=='–';
+  if(_hasVideo){
+    secHdr('3','Videoüberwachung');
+    row('Anzahl Kameras',_camAnz);
+    row('Aufzeichnung',v('cam_aufz'));
+    row('Speicher',getTagsSimple('speicher'));
+    if(_lupusCams!=='–'){ subHdr('LUPUS Produkte'); row('',_lupusCams); }
+    if(_eufyCams!=='–'){ subHdr('eufy Produkte'); row('',_eufyCams); }
+    if(_sonstLief!=='–'||_sonstMod!=='–'){ subHdr('Sonstiger Lieferant'); row('Lieferant',_sonstLief); row('Modell',_sonstMod); }
+    if(_cams!=='– keine –'){ subHdr('Kamerapositionen'); row('',_cams); }
+    row('Hinweise',v('video_notiz'));
+    gap();
+  }
 
-  // 4. Mechanisch
-  secHdr('4','Mechanische Sicherheit');
-  subHdr('Türschlösser / Schließanlagen');
-  row('Maßnahmen',getTagsSimple('tuer'));
-  row('Anzahl Türen',v('tuer_anzahl'));
-  row('Hersteller',v('tuer_hersteller'));
-  row('Notiz',v('tuer_notiz'));
-  subHdr('Tresore');
-  row('Typ',getTagsSimple('tresor'));
-  row('Notiz',v('tresor_notiz'));
-  subHdr('Einbruchschutz Fenster');
-  row('Maßnahmen',getTagsSimple('fenster'));
-  row('Anzahl Fenster',v('fen_anzahl'));
-  row('Typen',v('fen_typ'));
-  row('Notiz',v('fen_notiz'));
-  subHdr('Sonstiges');
-  row('',v('mech_sonstiges'));
-  gap();
+  // 4. Mechanisch – nur wenn etwas ausgewählt
+  const _tuer=getTagsSimple('tuer');
+  const _tresor=getTagsSimple('tresor');
+  const _fenster=getTagsSimple('fenster');
+  const _mechSonst=v('mech_sonstiges');
+  const _hasMech=_tuer!=='–'||_tresor!=='–'||_fenster!=='–'||_mechSonst!=='–';
+  if(_hasMech){
+    secHdr('4','Mechanische Sicherheit');
+    if(_tuer!=='–'){ subHdr('Türschlösser / Schließanlagen'); row('Maßnahmen',_tuer); row('Anzahl Türen',v('tuer_anzahl')); row('Hersteller',v('tuer_hersteller')); row('Notiz',v('tuer_notiz')); }
+    if(_tresor!=='–'){ subHdr('Tresore'); row('Typ',_tresor); row('Notiz',v('tresor_notiz')); }
+    if(_fenster!=='–'){ subHdr('Einbruchschutz Fenster'); row('Maßnahmen',_fenster); row('Anzahl Fenster',v('fen_anzahl')); row('Typen',v('fen_typ')); row('Notiz',v('fen_notiz')); }
+    if(_mechSonst!=='–'){ subHdr('Sonstiges'); row('',_mechSonst); }
+    gap();
+  }
 
   // 5. Notizen
   secHdr('5','Allgemeine Notizen');
