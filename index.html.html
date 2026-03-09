@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Kundenaufnahme – Sicherheitstechnik</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #f4f6fa;
+    --white:    #ffffff;
+    --surface:  #f9fafc;
+    --border:   #e2e6ef;
+    --accent:   #2563eb;
+    --accent-l: #eff4ff;
+    --accent2:  #1d4ed8;
+    --text:     #1a202c;
+    --muted:    #64748b;
+    --danger:   #ef4444;
+    --green:    #16a34a;
+    --radius:   12px;
+    --shadow:   0 1px 4px rgba(0,0,0,.07);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    padding-bottom: 80px;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--accent);
+    padding: 16px 18px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(37,99,235,.3);
+  }
+  .logo-box {
+    width: 38px; height: 38px;
+    background: rgba(255,255,255,.2);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .logo-box svg { width: 20px; height: 20px; color: #fff; }
+  header h1 { font-family: 'Poppins', sans-serif; font-size: 17px; font-weight: 700; color: #fff; }
+  header p  { font-size: 11px; color: rgba(255,255,255,.75); margin-top: 1px; }
+  .date-pill {
+    margin-left: auto;
+    background: rgba(255,255,255,.2);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* ── PROGRESS ── */
+  .prog-bar { height: 4px; background: #dbeafe; }
+  .prog-fill { height: 4px; background: var(--accent); transition: width .4s; width: 0; }
+
+  /* ── MAIN ── */
+  main { padding: 16px; max-width: 680px; margin: 0 auto; }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 24px; }
+  .sec-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .sec-num {
+    width: 28px; height: 28px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .sec-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px; font-weight: 700;
+    color: var(--text);
+  }
+  .sec-line { flex: 1; height: 1px; background: var(--border); }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--shadow);
+    margin-bottom: 10px;
+  }
+
+  /* ── FIELDS ── */
+  .row { display: flex; gap: 10px; }
+  .field { flex: 1; margin-bottom: 14px; min-width: 0; }
+  .field.w50 { flex: 0 0 calc(50% - 5px); }
+  .field.full { flex: 0 0 100%; }
+  label {
+    display: block;
+    font-size: 11px; font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .7px;
+    margin-bottom: 6px;
+  }
+  input[type=text], input[type=email], input[type=tel],
+  input[type=number]:not(.p-qty), select, textarea {
+    width: 100%;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    padding: 10px 12px;
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+    -webkit-appearance: none; appearance: none;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(37,99,235,.12);
+    background: #fff;
+  }
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2364748b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+  }
+  textarea { resize: vertical; min-height: 76px; line-height: 1.5; }
+  .sep { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+
+  /* ── TAG CHECKBOXEN ── */
+  .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 4px; }
+  .t-cb { display: none; }
+  .t-lb {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--surface); border: 1.5px solid var(--border);
+    border-radius: 20px; padding: 6px 13px;
+    font-size: 13px; color: var(--muted);
+    cursor: pointer; user-select: none; transition: all .18s;
+  }
+  .t-cb:checked + .t-lb {
+    background: var(--accent-l); border-color: var(--accent);
+    color: var(--accent); font-weight: 600;
+  }
+
+  /* ── LUPUS PRODUKT-ITEMS ── */
+  .grp-title {
+    font-size: 11px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: .7px;
+    color: var(--muted);
+    display: flex; align-items: center; gap: 7px;
+    margin: 14px 0 8px;
+  }
+  .grp-title:first-child { margin-top: 0; }
+  .grp-title svg { width: 13px; height: 13px; }
+
+  .p-item {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--surface); border: 1.5px solid var(--border);
+    border-radius: 9px; padding: 10px 10px;
+    margin-bottom: 6px; cursor: pointer;
+    transition: border-color .18s, background .18s;
+    overflow: hidden;
+    min-width: 0;
+  }
+  .p-item:has(.p-cb:checked) {
+    border-color: var(--accent); background: var(--accent-l);
+  }
+  .p-item::before {
+    content: '';
+    width: 20px; height: 20px; flex-shrink: 0;
+    border: 1.5px solid var(--border);
+    border-radius: 6px; background: #fff;
+    transition: all .15s;
+  }
+  .p-item:has(.p-cb:checked)::before {
+    background: var(--accent); border-color: var(--accent);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='9' viewBox='0 0 12 9'%3E%3Cpath d='M1 4.5l3 3 7-7' stroke='white' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: center;
+  }
+  .p-cb { display: none; }
+  .p-info { flex: 1; min-width: 0; cursor: pointer; overflow: hidden; }
+  .p-name { font-size: 14px; font-weight: 500; color: var(--text); }
+  .p-art  { font-size: 11px; color: var(--accent); font-weight: 600; margin-top: 1px; }
+  .p-hint { font-size: 11px; color: var(--muted); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .p-badge {
+    font-size: 10px; font-weight: 700;
+    background: #fef3c7; color: #92400e;
+    border-radius: 4px; padding: 1px 5px;
+    margin-left: 4px;
+  }
+  /* Mengenfeld: !important verhindert Überschreibung durch den globalen input-Selektor */
+  .p-qty {
+    flex: 0 0 52px !important;
+    width: 52px !important;
+    min-width: 52px !important;
+    max-width: 52px !important;
+    background: #fff !important;
+    border: 1.5px solid var(--border) !important;
+    border-radius: 7px !important;
+    color: var(--text) !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 14px !important;
+    padding: 6px 4px !important;
+    text-align: center !important;
+    outline: none;
+    -webkit-appearance: none; appearance: none;
+    box-shadow: none !important;
+  }
+  .p-qty:focus {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 2px rgba(37,99,235,.12) !important;
+  }
+
+  /* ── RAUMZEILEN ── */
+  .room-row {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--surface); border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 9px 12px; margin-bottom: 6px;
+  }
+  .room-row input[type=text] {
+    flex: 1; background: transparent; border: none;
+    font-size: 14px; color: var(--text); padding: 0; outline: none;
+  }
+  .room-row select {
+    flex: 0 0 auto; width: 155px; font-size: 12px;
+    padding: 5px 28px 5px 9px; border-radius: 6px;
+    background: #fff;
+  }
+  .btn-rm {
+    background: none; border: none; color: var(--muted);
+    cursor: pointer; font-size: 20px; line-height: 1;
+    padding: 2px 4px; border-radius: 4px; transition: color .18s;
+  }
+  .btn-rm:hover { color: var(--danger); }
+
+  /* ── KAMERAEINTRÄGE ── */
+  .cam-entry {
+    background: var(--surface); border: 1.5px solid var(--border);
+    border-radius: 9px; padding: 12px; margin-bottom: 8px;
+  }
+  .cam-hdr {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 10px; font-size: 13px; font-weight: 600; color: var(--muted);
+  }
+
+  /* ── ADD BUTTON ── */
+  .btn-add {
+    display: flex; align-items: center; gap: 8px;
+    background: none; border: 1.5px dashed var(--border);
+    border-radius: 9px; color: var(--muted);
+    padding: 10px 14px; font-family: 'Inter', sans-serif;
+    font-size: 13px; cursor: pointer; width: 100%;
+    transition: all .18s; margin-top: 4px;
+  }
+  .btn-add:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── SUPPLIER TABS ── */
+  .supplier-tabs {
+    display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap;
+  }
+  .sup-tab {
+    padding: 7px 16px; border-radius: 20px; border: 1.5px solid var(--border);
+    background: var(--surface); color: var(--muted);
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    transition: all .18s; user-select: none;
+  }
+  .sup-tab.active {
+    background: var(--accent); border-color: var(--accent);
+    color: #fff;
+  }
+  .sup-panel { display: none; }
+  .sup-panel.active { display: block; }
+
+  /* ── SUBMIT ── */
+  .submit-area { margin-top: 28px; }
+  .btn-pdf {
+    width: 100%; background: var(--accent); color: #fff;
+    border: none; border-radius: 12px; padding: 16px;
+    font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center;
+    justify-content: center; gap: 10px;
+    transition: background .2s, transform .1s;
+    box-shadow: 0 4px 14px rgba(37,99,235,.35);
+  }
+  .btn-pdf:active { transform: scale(.98); background: var(--accent2); }
+
+  /* ── SUB-LABEL ── */
+  .sub-label { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-box">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+    </svg>
+  </div>
+  <div>
+    <h1>Sicherheitstechnik</h1>
+    <p>Kundenaufnahme & Projektprotokoll</p>
+  </div>
+  <div class="date-pill" id="datePill"></div>
+</header>
+<div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
+
+<main>
+
+<!-- ═══ 1. KUNDENDATEN ═══ -->
+<div class="section">
+  <div class="sec-head">
+    <div class="sec-num">1</div>
+    <div class="sec-title">Kundendaten</div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="card">
+    <div class="row">
+      <div class="field">
+        <label>Vorname</label>
+        <input type="text" id="vorname" placeholder="Max" autocomplete="given-name">
+      </div>
+      <div class="field">
+        <label>Nachname</label>
+        <input type="text" id="nachname" placeholder="Mustermann" autocomplete="family-name">
+      </div>
+    </div>
+    <div class="field">
+      <label>Firma <span style="font-weight:400;opacity:.6">(optional)</span></label>
+      <input type="text" id="firma" placeholder="Muster GmbH" autocomplete="organization">
+    </div>
+    <hr class="sep">
+    <div class="row">
+      <div class="field">
+        <label>Straße</label>
+        <input type="text" id="strasse" placeholder="Musterstraße" autocomplete="address-line1">
+      </div>
+      <div class="field w50">
+        <label>Hausnr.</label>
+        <input type="text" id="hausnr" placeholder="12a">
+      </div>
+    </div>
+    <div class="row">
+      <div class="field w50">
+        <label>PLZ</label>
+        <input type="text" id="plz" placeholder="12345" inputmode="numeric">
+      </div>
+      <div class="field">
+        <label>Ort</label>
+        <input type="text" id="ort" placeholder="Musterstadt" autocomplete="address-level2">
+      </div>
+    </div>
+    <hr class="sep">
+    <div class="row">
+      <div class="field">
+        <label>E-Mail</label>
+        <input type="email" id="email" placeholder="max@beispiel.de" inputmode="email" autocomplete="email">
+      </div>
+      <div class="field">
+        <label>Telefon</label>
+        <input type="tel" id="telefon" placeholder="+49 171 …" inputmode="tel" autocomplete="tel">
+      </div>
+    </div>
+    <hr class="sep">
+    <div class="field">
+      <label>Wie auf uns aufmerksam geworden?</label>
+      <select id="aufmerksam">
+        <option value="">– bitte auswählen –</option>
+        <option>Empfehlung / Bekannte</option>
+        <option>Google / Internet</option>
+        <option>Social Media</option>
+        <option>Flyer / Werbung</option>
+        <option>Messe / Veranstaltung</option>
+        <option>Bestandskunde</option>
+        <option>Sonstiges</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 2. ALARMANLAGE ═══ -->
+<div class="section">
+  <div class="sec-head">
+    <div class="sec-num">2</div>
+    <div class="sec-title">Alarmanlage (LUPUS)</div>
+    <div class="sec-line"></div>
+  </div>
+
+  <!-- Zentralen -->
+  <div class="card">
+    <div class="grp-title">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      Zentralen
+    </div>
+    <div class="p-item" onclick="toggleCb('z_xt1')">
+      <input type="checkbox" class="p-cb" id="z_xt1" name="zentrale" value="LUPUS XT1 Plus Starter Pack (Art.12112)">
+      <div class="p-info"><div class="p-name">XT1 Plus Starter Pack</div><div class="p-art">Art. 12112 · 249 €</div><div class="p-hint">Inkl. Bewegungsmelder + Türkontakt · bis 100 Sensoren</div></div>
+      <input type="number" class="p-qty" min="0" max="9" placeholder="Anz." onclick="event.stopPropagation()">
+    </div>
+    <div class="p-item" onclick="toggleCb('z_xt2')">
+      <input type="checkbox" class="p-cb" id="z_xt2" name="zentrale" value="LUPUS XT2 Plus Zentrale (Art.12045)">
+      <div class="p-info"><div class="p-name">XT2 Plus Zentrale</div><div class="p-art">Art. 12045 · 699 €</div><div class="p-hint">Bis 240 Sensoren · 2 Areas · 4G · ZigBee</div></div>
+      <input type="number" class="p-qty" min="0" max="9" placeholder="Anz." onclick="event.stopPropagation()">
+    </div>
+    <div class="p-item" onclick="toggleCb('z_xt4')">
+      <input type="checkbox" class="p-cb" id="z_xt4" name="zentrale" value="LUPUS XT4 Zentrale (Art.12200)">
+      <div class="p-info"><div class="p-name">XT4 Zentrale <span class="p-badge">NEU</span></div><div class="p-art">Art. 12200 · auf Anfrage</div><div class="p-hint">Bis 480 Sensoren · Pro-Sensoren 2km · EN 50131 Grad2 · KfW-förderbar</div></div>
+      <input type="number" class="p-qty" min="0" max="9" placeholder="Anz." onclick="event.stopPropagation()">
+    </div>
+    <div class="field" style="margin-top:10px;margin-bottom:0">
+      <label>Anmerkung Zentrale</label>
+      <input type="text" id="zentrale_notiz" placeholder="z.B. 1× XT2 Plus für EG + OG …">
+    </div>
+  </div>
+
+  <!-- Bewegungsmelder -->
+  <div class="card">
+    <div class="grp-title">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      Bewegungsmelder
+    </div>
+    <div class="p-item" onclick="toggleCb('s_pir')">
+      <input type="checkbox" class="p-cb" id="s_pir" name="sensor" value="LUPUSEC PIR Bewegungsmelder V2 (Art.12116)">
+      <div class="p-info"><div class="p-name">PIR Bewegungsmelder V2</div><div class="p-art">Art. 12116 · 119 €</div><div class="p-hint">Innen · 30–100m · Sabotage</div></div>
+      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+    </div>
+    <div class="p-item" onclick="toggleCb('s_360')">
+      <input type="checkbox" class="p-cb" id="s_360" name="sensor" value="LUPUSEC 360° PIR Bewegungsmelder (Art.12111)">
+      <div class="p-info"><div class="p-name">360° PIR Bewegungsmelder</div><div class="p-art">Art. 12111 · 99 €</div><div class="p-hint">Deckenmontage · Vollrundumerfassung</div></div>
+      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+    </div>
+    <div class="p-item" onclick="toggleCb('s_dual')">
+      <input type="checkbox" class="p-cb" id="s_dual" name="sensor" value="LUPUSEC Dual Way Bewegungsmelder (Art.12034)">
+      <div class="p-info"><div class="p-name">Dual Way Bewegungsmelder</div><div class="p-art">Art. 12034 · 199 €</div><div class="p-hint">PIR + Mikrowelle · weniger Fehlalarme · 12m · 110°</div></div>
+      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+    </div>
+    <div class="p-item" onclick="toggleCb('s_linie')">
+      <input type="checkbox" class="p-cb" id="s_linie" name="sensor" value="LUPUSEC Linienbewegungsmelder (Art.12110)">
+      <div class="p-info"><div class="p-name">Linienbewegungsmelder</div><div class="p-art">Art. 12110 · 99 €</div><div class="p-hint">10° Erfassungsbereich · Lichtschrankeneffekt</div></div>
+      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+    </div>
+    <div class="p-item" onclick="toggleCb('s_bewpro')">
+      <input type="checkbox" class="p-cb" id="s_bewpro" name="sensor" value="LUPUS Bewegungsmelder Pro (Art.12201) – nur XT4">
+      <div class="p-info"><div class="p-name">Bewegungsmelder Pro <span class="p-badge">XT4</span></div><div class="p-art">Art. 12201 · auf Anfrage</div><div class="p-hint">Nur XT4 · bis 2km Reichweite</div></div>
+      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+    </div>
+    <div class="p-item" onclick="toggleCb('s_outdoor')">
+      <input type="checkbox" class="p-cb" id="s_outdoor" name="sensor" value="LUPUS Outdoor Bewegungsmelder Pro (Art.12202) – nur XT4">
+      <div class="p-info"><div class="p-name">Outdoor Bewegungsmelder Pro <span class="p-badge">XT4</span></div><div class="p-art">Art. 12202 · auf Anfrage</div><div class="p-hint">Außen · IP55 · Optex-Technologie · 5° Lichtschranke</div></div>
+      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+    </div>
+  </div>
+
+  <!-- Tür-/Fensterkontakte -->
+  <div class="card">
+    <div class="grp-title">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><circle cx="6" cy="12" r="1.5" fill="currentColor"/></svg>
+      Tür- & Fensterkontakte
+    </div>
+    <div class="p-item" onclick="toggleCb('s_fkw')">
+      <input type="checkbox" class="p-cb" id="s_fkw" name="sensor" value="LUPUSEC Fenster-/Türkontakt V2 weiß (Art.12113)">
+      <div class="p-info"><div class="p-name">Fenster-/Türkontakt V2 <span style="opacity:.6;font-size:12px">weiß</span></div><div class="p-art">Art. 12113 · 69 €</div><div class="p-hint">Magnetkontakt · 5 Jahre Batterie · Sabotage</div></div>
+      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+    </div>
+    <div class="p-item" onclick="toggleCb('s_fkb')">
+      <input type="checkbox" class="p-cb" id="s_fkb" name="sensor" value="LUPUSEC Fenster-/Türkontakt V2 braun (Art.12114)">
+      <div class="p-info"><div class="p-name">Fenster-/Türkontakt V2 <span style="opacity:.6;font-size:12px">braun</span></div><div class="p-art">Art. 12114 · 69 €</div><div class="p-hint">RAL 8011 braun</div></div>
+      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+    </div>
+    <div class="p-item" onclick="toggleCb('s_fka')">
+      <input type="checkbox" class="p-cb" id="s_fka" name="sensor" value="LUPUSEC Fenster-/Türkontakt V2 anthrazit (Art.12115)">
+      <div class="p-info"><div class="p-name">Fenster-/Türkontakt V2 <span style="opacity:.6;font-size:12px">anthrazit</span></div><div class="p-art">Art. 12115 · 69 €</div><div class="p-hint">RAL 7016 anthrazit</div></div>
+      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+    </div>
+    <div class="p-item" onclick="toggleCb('s_fkpro')">
+      <input type="checkbox" class="p-cb" id="s_fkpro" name="sensor" value="LUPUS Türkontakt Pro weiß (Art.12203) – nur XT4">
+      <div class="p-info"><div class="p-name">Türkontakt Pro <span class="p-badge">XT4</span></div><div class="p-art">Art. 12203 · auf Anfrage</div><div class="p-hint">Nur XT4 · bis 2km · 5 Jahre Batterie</div></div>
+      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+    </div>
+    <div class="p-item" onclick="toggleCb('s_rahmen')">
+      <input type="checkbox" class="p-cb" id="s_rahmen" name="sensor" value="LUPUS Rahmenkontakt Pro (Art.12204) – nur XT4">
+      <div class="p-info"><div class="p-name">Rahmenkontakt Pro <span class="p-badge">XT4</span></div><div class="p-art">Art. 12204 · auf Anfrage</div><div class="p-hint">Innenliegend Rahmen/Flügel · 5,8 Jahre Batterie</div></div>
+      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+    </div>
+  </div>
+
+  <!-- Weitere Melder -->
+  <div class="card">
+    <div class="grp-title">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      Weitere Gefahrenmelder
+    </div>
+    <div class="p-item" onclick="toggleCb('s_gb')">
+      <input type="checkbox" class="p-cb" id="s_gb" name="sensor" value="LUPUSEC Glasbruchmelder V2 (Art.12103)">
+      <div class="p-info"><div class="p-name">Glasbruchmelder V2</div><div class="p-art">Art. 12103 · 139 €</div><div class="p-hint">Akustisch · max. 8m Abstand</div></div>
+      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+    </div>
+    <div class="p-item" onclick="toggleCb('s_erschuett')">
+      <input type="checkbox" class="p-cb" id="s_erschuett" name="sensor" value="LUPUSEC Erschütterungsmelder (Art.12105)">
+      <div class="p-info"><div class="p-name">Erschütterungsmelder</div><div class="p-art">Art. 12105 · 89 €</div><div class="p-hint">Klebemont. · erkennt Einbruchversuche · 2,6 J. Batterie</div></div>
+      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+    </div>
+    <div class="p-item" onclick="toggleCb('s_rauch')">
+      <input type="checkbox" class="p-cb" id="s_rauch" name="sensor" value="LUPUSEC Rauchmelder V2 (Art.12117)">
+      <div class="p-info"><div class="p-name">Rauchmelder V2</div><div class="p-art">Art. 12117 · 99 €</div><div class="p-hint">EN 14604 · optisch · inkl. Innensirene</div></div>
+      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+    </div>
+    <div class="p-item" onclick="toggleCb('s_wasser')">
+      <input type="checkbox" class="p-cb" id="s_wasser" name="sensor" value="LUPUSEC Wassermelder V2 (Art.12047)">
+      <div class="p-info"><div class="p-name">Wassermelder V2</div><div class="p-art">Art. 12047 · 99 €</div><div class="p-hint">Ext. wasserfester Fühler · Schutz vor Wasserschäden</div></div>
+      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+    </div>
+  </div>
+
+  <!-- Sirenen & Bedienung -->
+  <div class="card">
+    <div class="grp-title">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+      Sirenen
+    </div>
+    <div class="p-item" onclick="toggleCb('sir_innen')">
+      <input type="checkbox" class="p-cb" id="sir_innen" name="sirene" value="LUPUSEC Innensirene (Art.12005)">
+      <div class="p-info"><div class="p-name">Innensirene</div><div class="p-art">Art. 12005 · 149 €</div><div class="p-hint">104 dB · drahtlos · 2 Jahre Batterie</div></div>
+      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+    </div>
+    <div class="p-item" onclick="toggleCb('sir_aussen')">
+      <input type="checkbox" class="p-cb" id="sir_aussen" name="sirene" value="LUPUSEC Außensirene V2 (Art.12033)">
+      <div class="p-info"><div class="p-name">Außensirene V2</div><div class="p-art">Art. 12033 · 219 €</div><div class="p-hint">107 dB · IP56 · 2-Wege · 3 Jahre Batterie</div></div>
+      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+    </div>
+
+    <div class="grp-title" style="margin-top:14px">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+      Steuerung & Bedienung
+    </div>
+    <div class="p-item" onclick="toggleCb('bed_keypad')">
+      <input type="checkbox" class="p-cb" id="bed_keypad" name="bedienung" value="LUPUSEC Keypad V2 (Art.12106)">
+      <div class="p-info"><div class="p-name">Keypad V2 (Innen)</div><div class="p-art">Art. 12106 · 99 €</div><div class="p-hint">Funk · rollierendes Verschlüsselungsverfahren · 2 J. Batterie</div></div>
+      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+    </div>
+    <div class="p-item" onclick="toggleCb('bed_kpout')">
+      <input type="checkbox" class="p-cb" id="bed_kpout" name="bedienung" value="LUPUSEC Outdoor Keypad V2">
+      <div class="p-info"><div class="p-name">Outdoor Keypad V2 (Außen)</div><div class="p-art">wetterfest</div><div class="p-hint">Für Außenbereich</div></div>
+      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+    </div>
+    <div class="p-item" onclick="toggleCb('bed_fb')">
+      <input type="checkbox" class="p-cb" id="bed_fb" name="bedienung" value="LUPUS Fernbedienung V3 (Art.12118)">
+      <div class="p-info"><div class="p-name">Fernbedienung V3</div><div class="p-art">Art. 12118 · 59 €</div><div class="p-hint">Hosentasche · Scharf/Unscharf · Panikfunktion</div></div>
+      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+    </div>
+    <div class="p-item" onclick="toggleCb('bed_tag')">
+      <input type="checkbox" class="p-cb" id="bed_tag" name="bedienung" value="LUPUSEC Tag Reader V2">
+      <div class="p-info"><div class="p-name">Tag Reader V2</div><div class="p-art">RFID</div><div class="p-hint">Schnelles Scharf/Unscharf per RFID-Tag</div></div>
+      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+    </div>
+    <div class="p-item" onclick="toggleCb('bed_display')">
+      <input type="checkbox" class="p-cb" id="bed_display" name="bedienung" value="LUPUS 10 Zoll PoE Smarthome Display (Art.11120)">
+      <div class="p-info"><div class="p-name">10″ PoE Smarthome Display</div><div class="p-art">Art. 11120 · 599 €</div><div class="p-hint">Wandmontage bündig · Android 13 · Strom per PoE</div></div>
+      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+    </div>
+    <div class="p-item" onclick="toggleCb('s_rep')">
+      <input type="checkbox" class="p-cb" id="s_rep" name="sensor" value="LUPUSEC Funkrepeater V2 (Art.12122)">
+      <div class="p-info"><div class="p-name">Funkrepeater V2</div><div class="p-art">Art. 12122 · 169 €</div><div class="p-hint">Erweitert Reichweite · bis 80 RF-Sensoren</div></div>
+      <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+    </div>
+  </div>
+
+  <!-- Räume -->
+  <div class="card">
+    <div class="grp-title">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+      Räume & Gerätezuordnung
+    </div>
+    <div class="sub-label">Welches Gerät kommt in welchen Raum?</div>
+    <div id="roomListAlarm"></div>
+    <button type="button" class="btn-add" onclick="addRoom('roomListAlarm')">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><line x1="7" y1="1" x2="7" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="1" y1="7" x2="13" y2="7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      Raum hinzufügen
+    </button>
+    <hr class="sep">
+    <div class="field" style="margin-bottom:0">
+      <label>Weitere Hinweise / Besonderheiten</label>
+      <textarea id="alarm_notiz" placeholder="z.B. Altbau, Funksituation, Kundenwunsch, Wandstärken …"></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 3. VIDEOÜBERWACHUNG ═══ -->
+<div class="section">
+  <div class="sec-head">
+    <div class="sec-num">3</div>
+    <div class="sec-title">Videoüberwachung</div>
+    <div class="sec-line"></div>
+  </div>
+
+  <!-- Eckdaten -->
+  <div class="card">
+    <div class="row">
+      <div class="field">
+        <label>Anzahl Kameras gesamt</label>
+        <input type="text" id="cam_anzahl" placeholder="z.B. 4" inputmode="numeric">
+      </div>
+      <div class="field">
+        <label>Aufzeichnungsdauer</label>
+        <select id="cam_aufz">
+          <option value="">– auswählen –</option>
+          <option>7 Tage</option><option>14 Tage</option>
+          <option>30 Tage</option><option>60 Tage</option>
+          <option>90 Tage</option><option>Nach Bedarf</option>
+        </select>
+      </div>
+    </div>
+    <div class="field" style="margin-bottom:0">
+      <label>Speicherlösung</label>
+      <div class="tags">
+        <input type="checkbox" class="t-cb" id="sp_nvr" name="speicher" value="NVR Rekorder">
+        <label class="t-lb" for="sp_nvr">NVR Rekorder</label>
+        <input type="checkbox" class="t-cb" id="sp_sd" name="speicher" value="SD-Karte (lokal)">
+        <label class="t-lb" for="sp_sd">SD-Karte lokal</label>
+        <input type="checkbox" class="t-cb" id="sp_cloud" name="speicher" value="Cloud-Speicher">
+        <label class="t-lb" for="sp_cloud">Cloud</label>
+        <input type="checkbox" class="t-cb" id="sp_nas" name="speicher" value="NAS">
+        <label class="t-lb" for="sp_nas">NAS</label>
+        <input type="checkbox" class="t-cb" id="sp_hdd" name="speicher" value="Festplatte lokal">
+        <label class="t-lb" for="sp_hdd">Festplatte lokal</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lieferanten-Tabs -->
+  <div class="card">
+    <div class="grp-title" style="margin-top:0">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="2"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+      Lieferant wählen
+    </div>
+    <div class="supplier-tabs">
+      <div class="sup-tab active" onclick="switchSupplier('lupus')">LUPUS Electronics</div>
+      <div class="sup-tab" onclick="switchSupplier('eufy')">eufy Security</div>
+      <div class="sup-tab" onclick="switchSupplier('sonstig')">Sonstiges</div>
+    </div>
+
+    <!-- LUPUS Video -->
+    <div class="sup-panel active" id="panel-lupus">
+      <div class="grp-title" style="margin-top:0">PoE Netzwerkkameras (Kabel)</div>
+      <div class="p-item" onclick="toggleCb('lc_le228')">
+        <input type="checkbox" class="p-cb" id="lc_le228" name="cam_lupus" value="LUPUS LE228 V2 PoE Dome 4MP (Art.LE228)">
+        <div class="p-info"><div class="p-name">LE228 V2 – Mini Dome PoE</div><div class="p-art">4MP · IP67 · IK10</div><div class="p-hint">Innen/Außen · KI Personen- & Fahrzeugerkennung · 50m IR · Mikrofon</div></div>
+        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      </div>
+      <div class="p-item" onclick="toggleCb('lc_le224')">
+        <input type="checkbox" class="p-cb" id="lc_le224" name="cam_lupus" value="LUPUS LE224 PoE Dome 8MP 4K">
+        <div class="p-info"><div class="p-name">LE224 – Dome PoE 4K</div><div class="p-art">8MP · 3840×2160px</div><div class="p-hint">Außen · Autofocus · IR-Nachtsicht · robust IK10</div></div>
+        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      </div>
+      <div class="p-item" onclick="toggleCb('lc_le221')">
+        <input type="checkbox" class="p-cb" id="lc_le221" name="cam_lupus" value="LUPUS LE221 PoE Kamera 8MP 4K">
+        <div class="p-info"><div class="p-name">LE221 – Bullet PoE 4K</div><div class="p-art">8MP · 3840×2160px</div><div class="p-hint">Außen · IR-Nachtsicht · wetterfest</div></div>
+        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      </div>
+      <div class="p-item" onclick="toggleCb('lc_le213')">
+        <input type="checkbox" class="p-cb" id="lc_le213" name="cam_lupus" value="LUPUS LE213 Alarmkamera Außen">
+        <div class="p-info"><div class="p-name">LE213 – Alarmkamera Außen</div><div class="p-art">Aktive Abschreckung</div><div class="p-hint">Automatische Personenerkennung · Täteransprache · Flutlicht · Sirene</div></div>
+        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      </div>
+      <div class="p-item" onclick="toggleCb('lc_le232')">
+        <input type="checkbox" class="p-cb" id="lc_le232" name="cam_lupus" value="LUPUS LE232 Alarmkamera">
+        <div class="p-info"><div class="p-name">LE232 – Alarmkamera 4MP</div><div class="p-art">4MP · 2560×1440px</div><div class="p-hint">KI · 3 Eskalationsstufen · aktive Abschreckung · 30m IR</div></div>
+        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      </div>
+
+      <div class="grp-title">WLAN-Kameras (kabellos)</div>
+      <div class="p-item" onclick="toggleCb('lc_le202')">
+        <input type="checkbox" class="p-cb" id="lc_le202" name="cam_lupus" value="LUPUS LE202 V3 WLAN Bullet 4MP">
+        <div class="p-info"><div class="p-name">LE202 V3 – WLAN Bullet</div><div class="p-art">4MP · WLAN oder LAN</div><div class="p-hint">Innen/Außen · KI Personenerkennung · Mikrofon · 30m IR</div></div>
+        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      </div>
+      <div class="p-item" onclick="toggleCb('lc_le204')">
+        <input type="checkbox" class="p-cb" id="lc_le204" name="cam_lupus" value="LUPUS LE204 WLAN Dome 3MP">
+        <div class="p-info"><div class="p-name">LE204 – WLAN Dome</div><div class="p-art">3MP · WLAN</div><div class="p-hint">Außen · SD-Aufzeichnung · Nachtsicht · Metallgehäuse</div></div>
+        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      </div>
+
+      <div class="grp-title">NVR Rekorder (LUPUS)</div>
+      <div class="p-item" onclick="toggleCb('lc_nvr4k')">
+        <input type="checkbox" class="p-cb" id="lc_nvr4k" name="cam_lupus" value="LUPUS NVR Rekorder 4K">
+        <div class="p-info"><div class="p-name">NVR Rekorder 4K</div><div class="p-art">HDMI 4K · VGA</div><div class="p-hint">Zentrale Aufzeichnung · bis 4K · HDMI & VGA Ausgang</div></div>
+        <input type="number" class="p-qty" min="0" max="9" placeholder="Anz." onclick="event.stopPropagation()">
+      </div>
+    </div>
+
+    <!-- EUFY Video -->
+    <div class="sup-panel" id="panel-eufy">
+      <div class="grp-title" style="margin-top:0">eufyCam – Akku & Solar (kabellos)</div>
+      <div class="p-item" onclick="toggleCb('ec_s330')">
+        <input type="checkbox" class="p-cb" id="ec_s330" name="cam_eufy" value="eufy eufyCam S330 (eufyCam 3) 4K">
+        <div class="p-info"><div class="p-name">eufyCam S330 (eufyCam 3)</div><div class="p-art">4K · Solar · kabellos</div><div class="p-hint">4K · BionicMind KI · lokale Speicherung · kein Abo</div></div>
+        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      </div>
+      <div class="p-item" onclick="toggleCb('ec_s210')">
+        <input type="checkbox" class="p-cb" id="ec_s210" name="cam_eufy" value="eufy eufyCam S210 (eufyCam 2C)">
+        <div class="p-info"><div class="p-name">eufyCam S210 (eufyCam 2C)</div><div class="p-art">1080p · Akku 180 Tage</div><div class="p-hint">Kabellos · 180 Tage Laufzeit · Personenerkennung</div></div>
+        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      </div>
+      <div class="p-item" onclick="toggleCb('ec_solocam')">
+        <input type="checkbox" class="p-cb" id="ec_solocam" name="cam_eufy" value="eufy SoloCam S340 Solar Außen">
+        <div class="p-info"><div class="p-name">SoloCam S340 – Solar Außen</div><div class="p-art">3K · Solar · IP67</div><div class="p-hint">Doppelobjektiv · 360° Wächter · kein WLAN nötig zum Aufladen</div></div>
+        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      </div>
+
+      <div class="grp-title">eufy Indoor – Innenkameras</div>
+      <div class="p-item" onclick="toggleCb('ec_s350')">
+        <input type="checkbox" class="p-cb" id="ec_s350" name="cam_eufy" value="eufy Indoor Cam S350 4K">
+        <div class="p-info"><div class="p-name">Indoor Cam S350</div><div class="p-art">4K · 360° · PTZ</div><div class="p-hint">Innen · Nachtsicht 30m · 8-fach Zoom · microSD bis 128GB</div></div>
+        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      </div>
+      <div class="p-item" onclick="toggleCb('ec_e220')">
+        <input type="checkbox" class="p-cb" id="ec_e220" name="cam_eufy" value="eufy Indoor Cam E220">
+        <div class="p-info"><div class="p-name">Indoor Cam E220</div><div class="p-art">2K · KI · Zwei-Wege Audio</div><div class="p-hint">KI Personen/Tier/Objekt · lokale Speicherung · kein Abo</div></div>
+        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      </div>
+
+      <div class="grp-title">eufy Außen – WLAN & PoE</div>
+      <div class="p-item" onclick="toggleCb('ec_outdoor')">
+        <input type="checkbox" class="p-cb" id="ec_outdoor" name="cam_eufy" value="eufy Outdoor Cam E220 All-in-One">
+        <div class="p-info"><div class="p-name">Outdoor Cam E220 All-in-One</div><div class="p-art">IP67 · WLAN</div><div class="p-hint">Wetterfest · Nachtsicht · Bewegungserkennung · einfache Montage</div></div>
+        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      </div>
+      <div class="p-item" onclick="toggleCb('ec_nvrs4')">
+        <input type="checkbox" class="p-cb" id="ec_nvrs4" name="cam_eufy" value="eufy PoE NVR Security System S4 Max">
+        <div class="p-info"><div class="p-name">PoE NVR Security System S4 Max</div><div class="p-art">PTZ + Weitwinkel · PoE</div><div class="p-hint">Auto-Tracking bis 50m · KI Fehlalarm-Reduktion · zentrales System</div></div>
+        <input type="number" class="p-qty" min="0" max="9" placeholder="Anz." onclick="event.stopPropagation()">
+      </div>
+      <div class="p-item" onclick="toggleCb('ec_flut')">
+        <input type="checkbox" class="p-cb" id="ec_flut" name="cam_eufy" value="eufy Flutlicht-Kamera 2K">
+        <div class="p-info"><div class="p-name">Flutlicht-Kamera</div><div class="p-art">2K · 2000 Lumen+</div><div class="p-hint">Aktive Abschreckung · 360° PTZ · bewegungsaktiviertes Licht · IP65</div></div>
+        <input type="number" class="p-qty" min="0" max="99" placeholder="Anz." onclick="event.stopPropagation()">
+      </div>
+    </div>
+
+    <!-- Sonstiges -->
+    <div class="sup-panel" id="panel-sonstig">
+      <div class="field" style="margin-bottom:0">
+        <label>Lieferant / Marke</label>
+        <input type="text" id="cam_sonst_lief" placeholder="z.B. Hikvision, Dahua, Axis …">
+      </div>
+      <div class="field" style="margin-top:12px;margin-bottom:0">
+        <label>Kameramodell(e)</label>
+        <textarea id="cam_sonst_modell" placeholder="Modellbezeichnung, Anzahl, Typ …" style="min-height:60px;"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Kamerapositionen -->
+  <div class="card">
+    <div class="grp-title" style="margin-top:0">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+      Kamerapositionen erfassen
+    </div>
+    <div id="camList"></div>
+    <button type="button" class="btn-add" onclick="addCamera()">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><line x1="7" y1="1" x2="7" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="1" y1="7" x2="13" y2="7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      Kamera hinzufügen
+    </button>
+    <hr class="sep">
+    <div class="field" style="margin-bottom:0">
+      <label>Weitere Hinweise</label>
+      <textarea id="video_notiz" placeholder="Netzwerkstruktur, PoE-Switch vorhanden, WLAN-Stärke, Besonderheiten …"></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 4. MECHANISCHE SICHERHEIT ═══ -->
+<div class="section">
+  <div class="sec-head">
+    <div class="sec-num">4</div>
+    <div class="sec-title">Mechanische Sicherheit</div>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="card">
+    <div class="grp-title" style="margin-top:0">Türschlösser / Schließanlagen</div>
+    <div class="field">
+      <div class="tags">
+        <input type="checkbox" class="t-cb" id="tuer_zyl" name="tuer" value="Sicherheitszylinder"><label class="t-lb" for="tuer_zyl">Sicherheitszylinder</label>
+        <input type="checkbox" class="t-cb" id="tuer_funk" name="tuer" value="Funkschließanlage"><label class="t-lb" for="tuer_funk">Funkschließanlage</label>
+        <input type="checkbox" class="t-cb" id="tuer_code" name="tuer" value="Codeschloss"><label class="t-lb" for="tuer_code">Codeschloss</label>
+        <input type="checkbox" class="t-cb" id="tuer_bio" name="tuer" value="Biometrie/Fingerabdruck"><label class="t-lb" for="tuer_bio">Biometrie</label>
+        <input type="checkbox" class="t-cb" id="tuer_mehr" name="tuer" value="Mehrpunktverriegelung"><label class="t-lb" for="tuer_mehr">Mehrpunktverr.</label>
+        <input type="checkbox" class="t-cb" id="tuer_gen" name="tuer" value="Generalschließanlage"><label class="t-lb" for="tuer_gen">Generalschließanlage</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Anzahl Türen</label><input type="text" id="tuer_anzahl" placeholder="z.B. 3" inputmode="numeric"></div>
+      <div class="field"><label>Hersteller / Marke</label><input type="text" id="tuer_hersteller" placeholder="ABUS, Evva, DOM …"></div>
+    </div>
+    <div class="field" style="margin-bottom:0"><label>Notiz Türen</label><textarea id="tuer_notiz" placeholder="Materialien, Zylinderlänge, Besonderheiten …" style="min-height:56px;"></textarea></div>
+  </div>
+
+  <div class="card">
+    <div class="grp-title" style="margin-top:0">Tresore</div>
+    <div class="field">
+      <div class="tags">
+        <input type="checkbox" class="t-cb" id="tre_wand" name="tresor" value="Wandeinbautresor"><label class="t-lb" for="tre_wand">Wandeinbau</label>
+        <input type="checkbox" class="t-cb" id="tre_stand" name="tresor" value="Standtresor"><label class="t-lb" for="tre_stand">Standtresor</label>
+        <input type="checkbox" class="t-cb" id="tre_boden" name="tresor" value="Bodentresor"><label class="t-lb" for="tre_boden">Bodentresor</label>
+        <input type="checkbox" class="t-cb" id="tre_daten" name="tresor" value="Datentresor"><label class="t-lb" for="tre_daten">Datentresor</label>
+        <input type="checkbox" class="t-cb" id="tre_waffe" name="tresor" value="Waffenschrank"><label class="t-lb" for="tre_waffe">Waffenschrank</label>
+      </div>
+    </div>
+    <div class="field" style="margin-bottom:0"><label>Notiz Tresor</label><textarea id="tresor_notiz" placeholder="Klasse, Größe, Inhalt, Standort …" style="min-height:56px;"></textarea></div>
+  </div>
+
+  <div class="card">
+    <div class="grp-title" style="margin-top:0">Einbruchschutz Fenster</div>
+    <div class="field">
+      <div class="tags">
+        <input type="checkbox" class="t-cb" id="fen_auf" name="fenster" value="Aufschraubsicherung"><label class="t-lb" for="fen_auf">Aufschraubsicherung</label>
+        <input type="checkbox" class="t-cb" id="fen_pilz" name="fenster" value="Pilzkopfzapfen"><label class="t-lb" for="fen_pilz">Pilzkopfzapfen</label>
+        <input type="checkbox" class="t-cb" id="fen_folie" name="fenster" value="Sicherheitsfolie"><label class="t-lb" for="fen_folie">Sicherheitsfolie</label>
+        <input type="checkbox" class="t-cb" id="fen_gitter" name="fenster" value="Fenstergitter"><label class="t-lb" for="fen_gitter">Fenstergitter</label>
+        <input type="checkbox" class="t-cb" id="fen_abschl" name="fenster" value="Fensterabschluss"><label class="t-lb" for="fen_abschl">Fensterabschluss</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Anzahl Fenster</label><input type="text" id="fen_anzahl" placeholder="z.B. 8" inputmode="numeric"></div>
+      <div class="field"><label>Besondere Typen</label><input type="text" id="fen_typ" placeholder="Keller, Dach …"></div>
+    </div>
+    <div class="field" style="margin-bottom:0"><label>Notiz Fenster</label><textarea id="fen_notiz" placeholder="Material, Alter, Besonderheiten …" style="min-height:56px;"></textarea></div>
+  </div>
+
+  <div class="card">
+    <div class="field" style="margin-bottom:0"><label>Sonstiges / Freier Text</label>
+    <textarea id="mech_sonstiges" placeholder="Garagentor, Rolltor, Absperrungen, weitere Maßnahmen …"></textarea></div>
+  </div>
+</div>
+
+<!-- ═══ 5. NOTIZEN ═══ -->
+<div class="section">
+  <div class="sec-head">
+    <div class="sec-num">5</div>
+    <div class="sec-title">Allgemeine Notizen</div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="card">
+    <div class="field" style="margin-bottom:0"><label>Objektbeschreibung / Besonderheiten</label>
+    <textarea id="allg_notiz" placeholder="Gebäudetyp, Stockwerke, Budget-Rahmen, besondere Anforderungen …" style="min-height:100px;"></textarea></div>
+  </div>
+</div>
+
+<!-- ═══ PDF ═══ -->
+<div class="submit-area">
+  <button class="btn-pdf" id="pdfBtn" onclick="exportPDF()">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+    <span id="pdfBtnTxt">Als PDF exportieren</span>
+  </button>
+</div>
+
+</main>
+
+<script>
+// ── DATUM
+const today = new Date().toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'});
+document.getElementById('datePill').textContent = today;
+
+// ── CHECKBOX TOGGLE (für lupus-items)
+function toggleCb(id) {
+  const cb = document.getElementById(id);
+  if(cb){ cb.checked = !cb.checked; updateProgress(); }
+}
+
+// ── SUPPLIER TABS
+function switchSupplier(name) {
+  document.querySelectorAll('.sup-tab').forEach((t,i)=>{
+    const names=['lupus','eufy','sonstig'];
+    t.classList.toggle('active', names[i]===name);
+  });
+  document.querySelectorAll('.sup-panel').forEach(p=>{
+    p.classList.toggle('active', p.id==='panel-'+name);
+  });
+}
+
+// ── RAUMLISTE
+const roomOpts = [
+  'PIR Bewegungsmelder V2','360° Bewegungsmelder','Dual Way Bewegungsmelder',
+  'Linienbewegungsmelder','Bewegungsmelder Pro (XT4)','Outdoor Bewegungsmelder Pro (XT4)',
+  'Türkontakt V2 weiß','Türkontakt V2 braun','Türkontakt V2 anthrazit',
+  'Türkontakt Pro (XT4)','Rahmenkontakt Pro (XT4)',
+  'Glasbruchmelder V2','Erschütterungsmelder','Rauchmelder V2',
+  'Wassermelder V2','Funkrepeater V2','Innensirene','Außensirene V2',
+  'Keypad V2','Outdoor Keypad V2','Fernbedienung V3','Tag Reader V2',
+  'Statusanzeige','10" PoE Display','Sonstiges'
+];
+function addRoom(listId) {
+  const list = document.getElementById(listId);
+  const row = document.createElement('div');
+  row.className = 'room-row';
+  const opts = roomOpts.map(o=>`<option>${o}</option>`).join('');
+  row.innerHTML = `
+    <input type="text" placeholder="Raum / Bereich (z.B. Wohnzimmer)">
+    <select><option value="">– Gerät –</option>${opts}</select>
+    <button class="btn-rm" onclick="this.parentElement.remove();updateProgress();">×</button>`;
+  list.appendChild(row);
+  updateProgress();
+}
+
+// ── KAMERALISTE
+let camN=0;
+function addCamera() {
+  camN++;
+  const list = document.getElementById('camList');
+  const e = document.createElement('div');
+  e.className = 'cam-entry';
+  e.innerHTML = `
+    <div class="cam-hdr"><span>Kamera ${camN}</span>
+      <button class="btn-rm" onclick="this.closest('.cam-entry').remove();updateProgress();">×</button></div>
+    <div class="row">
+      <div class="field"><label>Position / Raum</label><input type="text" placeholder="z.B. Eingang, Parkplatz …"></div>
+      <div class="field"><label>Typ</label>
+        <select>
+          <option value="">– auswählen –</option>
+          <option>Innen – Dome</option><option>Innen – PTZ</option><option>Innen – WLAN</option>
+          <option>Außen – Bullet</option><option>Außen – Dome</option><option>Außen – PTZ</option>
+          <option>Außen – Flutlicht</option><option>Türklingel-Kamera</option>
+        </select></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Auflösung</label>
+        <select><option value="">–</option><option>1080p (2MP)</option><option>3MP</option>
+          <option>4MP</option><option>5MP</option><option>4K (8MP)</option></select></div>
+      <div class="field"><label>Anschluss</label>
+        <select><option value="">–</option><option>PoE (Netzwerkkabel)</option>
+          <option>WLAN</option><option>Akku/Solar</option><option>Analog/BNC</option></select></div>
+    </div>`;
+  list.appendChild(e);
+  updateProgress();
+}
+
+// ── PROGRESS
+function updateProgress() {
+  const ids = ['vorname','nachname','strasse','plz','ort','email','telefon'];
+  let f = ids.filter(id=>document.getElementById(id)?.value.trim()).length;
+  const checks = document.querySelectorAll('input[type=checkbox]:checked').length;
+  const pct = Math.min(100, Math.round(((f + Math.min(checks,5)) / (ids.length+5))*100));
+  document.getElementById('progFill').style.width = pct + '%';
+}
+document.addEventListener('input', updateProgress);
+document.addEventListener('change', updateProgress);
+
+// ── HELPERS
+function v(id){ return document.getElementById(id)?.value.trim()||'–'; }
+function getTags(name) {
+  return [...document.querySelectorAll(`input[name="${name}"]:checked`)]
+    .map(c=>{
+      const item = c.closest('.p-item');
+      const qty = item?.querySelector('.p-qty')?.value;
+      return qty&&qty>0 ? `${c.value} ×${qty}` : c.value;
+    }).join('\n  ') || '–';
+}
+function getTagsSimple(name){
+  return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(c=>c.value).join(', ')||'–';
+}
+function getCameras(){
+  const entries=document.querySelectorAll('.cam-entry');
+  if(!entries.length)return'– keine –';
+  return [...entries].map((e,i)=>{
+    const inp=e.querySelector('input[type=text]');
+    const sels=e.querySelectorAll('select');
+    return `Kamera ${i+1}: ${inp?.value||'–'} | ${sels[0]?.value||'–'} | ${sels[1]?.value||'–'} | ${sels[2]?.value||'–'}`;
+  }).join('\n  ');
+}
+function getRooms(listId){
+  const rows=document.querySelectorAll(`#${listId} .room-row`);
+  if(!rows.length)return'– keine –';
+  return [...rows].map(r=>`${r.querySelector('input')?.value||'–'} → ${r.querySelector('select')?.value||'–'}`).join('\n  ');
+}
+
+// ── PDF EXPORT
+async function exportPDF(){
+  const btn=document.getElementById('pdfBtn');
+  const txt=document.getElementById('pdfBtnTxt');
+  btn.style.opacity='.6'; txt.textContent='PDF wird erstellt …';
+  if(!window.jspdf){
+    await new Promise((res,rej)=>{
+      const s=document.createElement('script');
+      s.src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+      s.onload=res; s.onerror=rej; document.head.appendChild(s);
+    });
+  }
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+  const ML=16,MR=16,PW=210,TW=210-ML-MR;
+  let y=0;
+
+  function newPage(){
+    doc.addPage(); y=14;
+    doc.setFillColor(37,99,235); doc.rect(0,0,210,10,'F');
+    doc.setFontSize(7); doc.setTextColor(255,255,255);
+    doc.text('SICHERHEITSTECHNIK – KUNDENPROTOKOLL',ML,7);
+    doc.text(`Datum: ${today}`,PW-MR,7,{align:'right'});
+    y=16;
+  }
+  function chk(n=8){ if(y+n>280) newPage(); }
+
+  // Header
+  doc.setFillColor(37,99,235); doc.rect(0,0,210,40,'F');
+  doc.setFillColor(255,255,255,0.2);
+  doc.setFillColor(255,255,255); doc.setGState(new doc.GState({opacity:0.15}));
+  doc.rect(0,0,8,40,'F'); doc.setGState(new doc.GState({opacity:1}));
+  doc.setTextColor(255,255,255);
+  doc.setFontSize(20); doc.setFont('helvetica','bold');
+  doc.text('Sicherheitstechnik',ML,20);
+  doc.setFontSize(9); doc.setFont('helvetica','normal');
+  doc.setTextColor(200,220,255);
+  doc.text('Kundenaufnahme & Projektprotokoll',ML,28);
+  doc.setFillColor(255,255,255); doc.setTextColor(37,99,235);
+  doc.roundedRect(PW-MR-38,12,38,10,2,2,'F');
+  doc.setFontSize(8); doc.setFont('helvetica','bold');
+  doc.text(today,PW-MR-19,18.5,{align:'center'});
+  y=50;
+
+  function secHdr(n,title){
+    chk(14); y+=2;
+    doc.setFillColor(37,99,235); doc.rect(ML,y,TW,9,'F');
+    doc.setFillColor(255,214,0); doc.rect(ML,y,7,9,'F');
+    doc.setTextColor(37,99,235); doc.setFontSize(8); doc.setFont('helvetica','bold');
+    doc.text(n,ML+3.5,y+6.2,{align:'center'});
+    doc.setTextColor(255,255,255); doc.setFontSize(9);
+    doc.text(title.toUpperCase(),ML+11,y+6.2);
+    y+=13;
+  }
+  function subHdr(title){
+    chk(8); y+=2;
+    doc.setFillColor(239,246,255); doc.rect(ML,y,TW,7,'F');
+    doc.setTextColor(37,99,235); doc.setFontSize(7.5); doc.setFont('helvetica','bold');
+    doc.text(title.toUpperCase(),ML+3,y+5);
+    y+=9;
+  }
+  function row(label,val,indent=0){
+    if(!val||val==='–')return;
+    chk(7);
+    const lines=doc.splitTextToSize(String(val),TW-50-indent);
+    const h=Math.max(7,lines.length*5+2);
+    doc.setFillColor(249,250,252); doc.rect(ML+indent,y,TW-indent,h,'F');
+    doc.setTextColor(100,116,139); doc.setFontSize(7.5); doc.setFont('helvetica','normal');
+    doc.text(label,ML+3+indent,y+h/2+2);
+    doc.setTextColor(26,32,44); doc.setFontSize(8.5);
+    doc.text(lines,ML+50+indent,y+h/2-(lines.length-1)*2.5+2);
+    y+=h+1;
+  }
+  function gap(){ y+=4; }
+
+  // 1. Kundendaten
+  secHdr('1','Kundendaten');
+  const firma=v('firma')!=='–'?`  |  ${v('firma')}`:'';
+  row('Name',`${v('vorname')} ${v('nachname')}${firma}`);
+  row('Adresse',`${v('strasse')} ${v('hausnr')}, ${v('plz')} ${v('ort')}`);
+  row('E-Mail',v('email'));
+  row('Telefon',v('telefon'));
+  row('Aufmerksam',v('aufmerksam'));
+  gap();
+
+  // 2. Alarmanlage
+  secHdr('2','Alarmanlage (LUPUS)');
+  subHdr('Zentralen');
+  row('',getTags('zentrale'));
+  row('Anmerkung',v('zentrale_notiz'));
+  subHdr('Sensoren & Melder');
+  row('',getTags('sensor'));
+  subHdr('Sirenen');
+  row('',getTags('sirene'));
+  subHdr('Steuerung & Bedienung');
+  row('',getTags('bedienung'));
+  const roomsAlarm=getRooms('roomListAlarm');
+  if(roomsAlarm!=='– keine –'){ subHdr('Räume & Gerätezuordnung'); row('',roomsAlarm); }
+  row('Hinweise',v('alarm_notiz'));
+  gap();
+
+  // 3. Videoüberwachung
+  secHdr('3','Videoüberwachung');
+  row('Anzahl Kameras',v('cam_anzahl'));
+  row('Aufzeichnung',v('cam_aufz'));
+  row('Speicher',getTagsSimple('speicher'));
+  const lupusCams=getTags('cam_lupus');
+  const eufyCams=getTags('cam_eufy');
+  if(lupusCams!=='–'){ subHdr('LUPUS Produkte'); row('',lupusCams); }
+  if(eufyCams!=='–'){ subHdr('eufy Produkte'); row('',eufyCams); }
+  const sonstLief=v('cam_sonst_lief');
+  const sonstMod=v('cam_sonst_modell');
+  if(sonstLief!=='–'||sonstMod!=='–'){ subHdr('Sonstiger Lieferant'); row('Lieferant',sonstLief); row('Modell',sonstMod); }
+  const cams=getCameras();
+  if(cams!=='– keine –'){ subHdr('Kamerapositionen'); row('',cams); }
+  row('Hinweise',v('video_notiz'));
+  gap();
+
+  // 4. Mechanisch
+  secHdr('4','Mechanische Sicherheit');
+  subHdr('Türschlösser / Schließanlagen');
+  row('Maßnahmen',getTagsSimple('tuer'));
+  row('Anzahl Türen',v('tuer_anzahl'));
+  row('Hersteller',v('tuer_hersteller'));
+  row('Notiz',v('tuer_notiz'));
+  subHdr('Tresore');
+  row('Typ',getTagsSimple('tresor'));
+  row('Notiz',v('tresor_notiz'));
+  subHdr('Einbruchschutz Fenster');
+  row('Maßnahmen',getTagsSimple('fenster'));
+  row('Anzahl Fenster',v('fen_anzahl'));
+  row('Typen',v('fen_typ'));
+  row('Notiz',v('fen_notiz'));
+  subHdr('Sonstiges');
+  row('',v('mech_sonstiges'));
+  gap();
+
+  // 5. Notizen
+  secHdr('5','Allgemeine Notizen');
+  row('',v('allg_notiz'));
+
+  // Footer
+  const pages=doc.getNumberOfPages();
+  for(let p=1;p<=pages;p++){
+    doc.setPage(p);
+    doc.setFillColor(243,244,246); doc.rect(0,286,210,11,'F');
+    doc.setFontSize(7); doc.setTextColor(100,116,139);
+    doc.setFont('helvetica','normal');
+    doc.text('Sicherheitstechnik – Vertrauliches Kundenprotokoll',ML,293);
+    doc.text(`Seite ${p} / ${pages}`,PW-MR,293,{align:'right'});
+  }
+
+  const name=[v('nachname'),v('vorname')].filter(s=>s!=='–').join('_')||'Kunde';
+  doc.save(`Protokoll_${name}_${today.replace(/\./g,'')}.pdf`);
+  btn.style.opacity='1'; txt.textContent='Als PDF exportieren';
+}
+</script>
+</body>
+</html>
